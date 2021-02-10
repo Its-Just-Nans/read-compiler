@@ -10,7 +10,6 @@
 </head>
 <body>
     <div id="globalReadMe"></div>
-    <input type="file" id="file">
 <script>
 
 let params = (new URL(document.location)).searchParams;
@@ -23,15 +22,18 @@ if(checkCss){
 }
 let checkUrl = params.get('url');
 if(checkUrl){
-    document.getElementById('file').remove();
     loadNewPage(checkUrl);
 }else{
+    let input = document.createElement('input');
+    input.type = "file";
+    input.id = "file";
+    document.body.append(input)
     let text = `
 # How to use :
 
 ### Parameters :
 
-You can add parameters with \`https://its-just-nans.github.io/read-compiler?name1=value1&name2=value2\`
+You can add parameters with \`https://its-just-nans.github.io/readme-compiler?name1=value1&name2=value2\`
 
 - put \`?url=\` to compile a file from an url
 
