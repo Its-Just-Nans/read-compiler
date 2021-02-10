@@ -19,7 +19,7 @@ let link = document.createElement('link');
 if(checkCss){
     link.href = checkCss;
 }else{
-    link = "https://its-just-nans.github.io/rt/style.css";
+    link.href = "https://its-just-nans.github.io/rt/style.css";
 }
 link.rel = "stylesheet";
 document.head.append(link);
@@ -38,11 +38,11 @@ if(checkUrl){
 
 ### Parameters :
 
-You can add parameters with \`https://its-just-nans.github.io/readme-compiler?name1=value1&name2=value2\`
+You can add parameters with \`https://its-just-nans.github.io/readme-compiler/?name1=value1&name2=value2\`
 
-- put \`?url=\` to compile a file from an url
+- put \`url=\` to compile a file from an url
 
-- put \`?css=\` to compile a css file from an url
+- put \`css=\` to compile a css file from an url
 
 ### or upload and compile your file now
 `;
