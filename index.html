@@ -15,13 +15,12 @@ let params = (new URL(document.location)).searchParams;
 
 /*---------------CSS--------------*/
 let checkCss = params.get('css');
-let link;
+let link = document.createElement('link');
 if(checkCss){
-    link = document.createElement('link');
+    link.href = checkCss;
 }else{
     link = "https://its-just-nans.github.io/rt/style.css";
 }
-link.href = checkCss;
 link.rel = "stylesheet";
 document.head.append(link);
 
