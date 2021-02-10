@@ -6,20 +6,26 @@
     <script src="//unpkg.com/@highlightjs/cdn-assets@10.4.1/highlight.min.js"></script>
     <link href="//its-just-nans.github.io/styleREADME.css" rel="stylesheet">
     <link href="//unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/default.min.css" rel="stylesheet">
-    <link href="https://its-just-nans.github.io/rt/style.css" rel="stylesheet">
 </head>
 <body>
     <div id="globalReadMe"></div>
 <script>
 
 let params = (new URL(document.location)).searchParams;
+
+/*---------------CSS--------------*/
 let checkCss = params.get('css');
+let link;
 if(checkCss){
-    let link = document.createElement('link');
-    link.href = checkCss;
-    link.rel = "stylesheet";
-    document.head.append(link);
+    link = document.createElement('link');
+}else{
+    link = "https://its-just-nans.github.io/rt/style.css";
 }
+link.href = checkCss;
+link.rel = "stylesheet";
+document.head.append(link);
+
+/*---------------README--------------*/
 let checkUrl = params.get('url');
 if(checkUrl){
     loadNewPage(checkUrl);
@@ -53,6 +59,8 @@ You can add parameters with \`https://its-just-nans.github.io/readme-compiler?na
     };
 }
 
+
+/*---------------FUNCTION--------------*/
 function loadNewPage(url){
     makeRequest('GET', url).then( function(response){
         render(response);
