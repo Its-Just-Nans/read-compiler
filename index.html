@@ -1,38 +1,40 @@
 <!DOCTYPE html>
-<head>
-    <title>README compiler</title>
-    <script src="//its-just-nans.github.io/cdn/useful.js"></script>
-    <script src="//unpkg.com/showdown/dist/showdown.min.js"></script>
-    <script src="//unpkg.com/@highlightjs/cdn-assets@10.4.1/highlight.min.js"></script>
-    <link href="//its-just-nans.github.io/styleREADME.css" rel="stylesheet" />
-    <link href="//unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/default.min.css" rel="stylesheet" />
-</head>
-<body>
-    <div id="globalReadMe"></div>
-    <script>
-        let params = new URL(document.location).searchParams;
+<html>
+    <head>
+        <title>README compiler</title>
+        <script src="https://its-just-nans.github.io/cdn/useful.js"></script>
+        <!--- README --->
+        <script src="https://its-just-nans.github.io/cdn/showdown.min.js"></script>
+        <script src="https://its-just-nans.github.io/cdn/highlight.min.js"></script>
+        <link href="https://its-just-nans.github.io/cdn/custom.showdown.css" rel="stylesheet" />
+        <link href="https://its-just-nans.github.io/cdn/showdown.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="globalReadMe"></div>
+        <script>
+            let params = new URL(document.location).searchParams;
 
-        /*---------------CSS--------------*/
-        let checkCss = params.get("css");
-        let link = document.createElement("link");
-        if (checkCss) {
-            link.href = checkCss;
-        } else {
-            link.href = "https://its-just-nans.github.io/rt/style.css";
-        }
-        link.rel = "stylesheet";
-        document.head.append(link);
+            /*---------------CSS--------------*/
+            let checkCss = params.get("css");
+            let link = document.createElement("link");
+            if (checkCss) {
+                link.href = checkCss;
+            } else {
+                link.href = "https://its-just-nans.github.io/rt/style.css";
+            }
+            link.rel = "stylesheet";
+            document.head.append(link);
 
-        /*---------------README--------------*/
-        let checkUrl = params.get("url");
-        if (checkUrl) {
-            loadNewPage(checkUrl);
-        } else {
-            let input = document.createElement("input");
-            input.type = "file";
-            input.id = "file";
-            document.body.append(input);
-            let text = `
+            /*---------------README--------------*/
+            let checkUrl = params.get("url");
+            if (checkUrl) {
+                loadNewPage(checkUrl);
+            } else {
+                let input = document.createElement("input");
+                input.type = "file";
+                input.id = "file";
+                document.body.append(input);
+                let text = `
 # How to use :
 
 ### Parameters :
@@ -45,44 +47,45 @@ You can add parameters with \`https://its-just-nans.github.io/readme-compiler/?n
 
 ### or upload and compile your file now
 `;
-            render(text);
-            document.getElementById("file").onchange = function () {
-                let selectedFile = this.files[0];
-                let reader = new FileReader();
-                reader.onload = function () {
-                    document.getElementById("file").remove();
-                    render(reader.result);
+                render(text);
+                document.getElementById("file").onchange = function () {
+                    let selectedFile = this.files[0];
+                    let reader = new FileReader();
+                    reader.onload = function () {
+                        document.getElementById("file").remove();
+                        render(reader.result);
+                    };
+                    reader.readAsText(selectedFile);
                 };
-                reader.readAsText(selectedFile);
-            };
-        }
-
-        /*---------------FUNCTION--------------*/
-        function loadNewPage(url) {
-            makeRequest("GET", url)
-                .then(function (response) {
-                    render(response);
-                })
-                .catch(function (error) {
-                    document.getElementById("globalReadMe").innerHTML = error.status;
-                    console.log("README compiler error: ", error);
-                });
-        }
-
-        function render(file) {
-            if (typeof showdown !== "undefined") {
-                let converter = new showdown.Converter();
-                converter.setFlavor("github");
-                let html = converter.makeHtml(file);
-                document.getElementById("globalReadMe").innerHTML = html;
-                document.querySelectorAll("pre code").forEach((block) => {
-                    hljs.highlightBlock(block);
-                });
-            } else {
-                setTimeout(function () {
-                    render();
-                }, 100);
             }
-        }
-    </script>
-</body>
+
+            /*---------------FUNCTION--------------*/
+            function loadNewPage(url) {
+                makeRequest("GET", url)
+                    .then(function (response) {
+                        render(response);
+                    })
+                    .catch(function (error) {
+                        document.getElementById("globalReadMe").innerHTML = error.status;
+                        console.log("README compiler error: ", error);
+                    });
+            }
+
+            function render(file) {
+                if (typeof showdown !== "undefined") {
+                    let converter = new showdown.Converter();
+                    converter.setFlavor("github");
+                    let html = converter.makeHtml(file);
+                    document.getElementById("globalReadMe").innerHTML = html;
+                    document.querySelectorAll("pre code").forEach((block) => {
+                        hljs.highlightBlock(block);
+                    });
+                } else {
+                    setTimeout(function () {
+                        render();
+                    }, 100);
+                }
+            }
+        </script>
+    </body>
+</html>
