@@ -1,91 +1,28 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>README compiler</title>
-        <script src="https://its-just-nans.github.io/cdn/useful.js"></script>
-        <!--- README --->
-        <script src="https://its-just-nans.github.io/cdn/showdown.min.js"></script>
-        <script src="https://its-just-nans.github.io/cdn/highlight.min.js"></script>
-        <link href="https://its-just-nans.github.io/cdn/custom.showdown.css" rel="stylesheet" />
-        <link href="https://its-just-nans.github.io/cdn/highlight.min.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div id="globalReadMe"></div>
-        <script>
-            let params = new URL(document.location).searchParams;
 
-            /*---------------CSS--------------*/
-            let checkCss = params.get("css");
-            let link = document.createElement("link");
-            if (checkCss) {
-                link.href = checkCss;
-            } else {
-                link.href = "https://its-just-nans.github.io/rt/style.css";
-            }
-            link.rel = "stylesheet";
-            document.head.append(link);
+<head>
+    <title>README compiler</title>
+</head>
 
-            /*---------------README--------------*/
-            let checkUrl = params.get("url");
-            if (checkUrl) {
-                loadNewPage(checkUrl);
-            } else {
-                let input = document.createElement("input");
-                input.type = "file";
-                input.id = "file";
-                document.body.append(input);
-                let text = `
-# How to use :
+<body>
+    <a href="./old/">old verison here</a>
+    <br />
+    <br />
+    <br />
+    <a href="./public/">new online version here</a>
+    <p>To call the API :</p>
+    <pre><code class="hljs js language-js"><span class="hljs-keyword">const</span> SERVER_URL = <span class="hljs-string">&quot;http://server.com&quot;</span>;
 
-### Parameters :
+<span class="hljs-keyword">const</span> myMarkdown = <span class="hljs-string">&quot;Hello World&quot;</span>;
 
-You can add parameters with \`https://its-just-nans.github.io/readme-compiler/?name1=value1&name2=value2\`
+<span class="hljs-keyword">const</span> run = <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">`<span class="hljs-subst">${SERVER_URL}</span>/convert`</span>, {
+        <span class="hljs-attr">method</span>: <span class="hljs-string">&quot;POST&quot;</span>,
+        <span class="hljs-attr">body</span> : myMarkdown
+    });
+}
+run();</code></pre>
+</body>
 
-- put \`url=\` to compile a file from an url
-
-- put \`css=\` to compile a css file from an url
-
-### or upload and compile your file now
-`;
-                render(text);
-                document.getElementById("file").onchange = function () {
-                    let selectedFile = this.files[0];
-                    let reader = new FileReader();
-                    reader.onload = function () {
-                        document.getElementById("file").remove();
-                        render(reader.result);
-                    };
-                    reader.readAsText(selectedFile);
-                };
-            }
-
-            /*---------------FUNCTION--------------*/
-            function loadNewPage(url) {
-                makeRequest("GET", url)
-                    .then(function (response) {
-                        render(response);
-                    })
-                    .catch(function (error) {
-                        document.getElementById("globalReadMe").innerHTML = error.status;
-                        console.log("README compiler error: ", error);
-                    });
-            }
-
-            function render(file) {
-                if (typeof showdown !== "undefined") {
-                    let converter = new showdown.Converter();
-                    converter.setFlavor("github");
-                    let html = converter.makeHtml(file);
-                    document.getElementById("globalReadMe").innerHTML = html;
-                    document.querySelectorAll("pre code").forEach((block) => {
-                        hljs.highlightBlock(block);
-                    });
-                } else {
-                    setTimeout(function () {
-                        render();
-                    }, 100);
-                }
-            }
-        </script>
-    </body>
 </html>
