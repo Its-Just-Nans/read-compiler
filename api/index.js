@@ -17,6 +17,7 @@ converter.setFlavor("github");
 
 module.exports = async (req, res) => {
     if (req && req.body) {
+        console.log("one conversion");
         const result = converter.makeHtml(req.body);
         res.end(result);
     }
