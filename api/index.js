@@ -15,7 +15,7 @@ const converter = new showdown.Converter({
 converter.setFlavor("github");
 
 
-module.exports = async (req, res) => {
+export default function handler(req, res) {
     if (req && req.body) {
         const result = converter.makeHtml(req.body);
         console.log("conversion done");
