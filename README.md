@@ -1,12 +1,16 @@
 # read-compiler
 
-A online README Compiler
+An online Markdown compiler (online version and API)
 
-New online version and API
+## Why this project ?
 
-```sh
+To have a Markdown compiler **with Latex**
+
+## API (with serverless function of Vercel)
+
 To call the API :
 
+```js
 const SERVER_URL = "https://readme-compiler.vercel.app";
 
 const myMarkdown = "Hello World";

@@ -16,12 +16,22 @@
 	let input = "";
 	let output = "";
 	let isChecked = true;
+	let transformQuote = true;
+	let isLineBreak = true;
 	const convert = () => {
+		let temp = "";
 		try {
-			output = converter.makeHtml(input);
+			temp = converter.makeHtml(input);
 		} catch (e) {
 			console.log("error");
 		}
+		if (transformQuote) {
+			temp = temp.replaceAll('"', "");
+		}
+		if (isLineBreak) {
+			temp = temp.replaceAll("\n", "");
+		}
+		output = temp;
 	};
 </script>
 
@@ -29,6 +39,13 @@
 	<div id="utils">
 		<label for="checker">On click change</label>
 		<input name="checker" type="checkbox" bind:checked={isChecked} />
+		<br />
+		<label for="checker">Transform double quote</label>
+		<input name="checker" type="checkbox" bind:checked={transformQuote} />
+		<br />
+		<label for="checker">Remove line break</label>
+		<input name="checker" type="checkbox" bind:checked={isLineBreak} />
+		<br />
 		<button
 			on:click={() => {
 				convert();
@@ -55,6 +72,9 @@
 </main>
 
 <style>
+	label {
+		display: inline;
+	}
 	#utils {
 		text-align: center;
 	}
