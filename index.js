@@ -45,7 +45,7 @@ server.use("/", (req, res, next) => {
     send(res, 200, file, { "Content-Type": "text/html" });
 });
 
-const PORT = 3000;
+const PORT = 3500;
 server.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
 })

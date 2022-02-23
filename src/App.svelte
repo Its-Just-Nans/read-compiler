@@ -17,7 +17,11 @@
 	let output = "";
 	let isChecked = true;
 	const convert = () => {
-		output = converter.makeHtml(input);
+		try {
+			output = converter.makeHtml(input);
+		} catch (e) {
+			console.log("error");
+		}
 	};
 </script>
 
@@ -44,6 +48,10 @@
 		}}
 	/>
 	<textarea disabled={true}>{output}</textarea>
+	<br />
+	<div>
+		{@html output}
+	</div>
 </main>
 
 <style>
@@ -55,6 +63,6 @@
 		height: 80%;
 	}
 	main {
-		height: 100%;
+		height: 50%;
 	}
 </style>
