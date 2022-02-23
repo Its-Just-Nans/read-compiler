@@ -8,13 +8,14 @@ import { dirname, join } from 'path';
 import { createReadStream } from "fs";
 import serve from 'serve-static';
 import send from '@polka/send-type'
+import cors from 'cors';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const dir = join(__dirname, 'public');
 const serverStatic = serve(dir, { fallthrough: false, maxAge: 1, immutable: true });
 
-
+const corsMiddleware = cors({ origin: true });
 const server = polka();
 const converter = new showdown.Converter({
     openLinksInNewWindow: true,
@@ -28,6 +29,7 @@ const converter = new showdown.Converter({
 });
 converter.setFlavor("github");
 
+server.use(corsMiddleware)
 server.use(bodyParser.text())
 server.use("/public", serverStatic);
 server.use("/old", (req, res, next) => {
