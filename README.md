@@ -12,7 +12,7 @@ const SERVER_URL = "https://readme-compiler.vercel.app";
 const myMarkdown = "Hello World";
 
 const run = async () => {
-    const res = await fetch(`${SERVER_URL}/convert`, {
+    const res = await fetch(`${SERVER_URL}/api/`, {
         method: "POST",
         body : myMarkdown
     });
